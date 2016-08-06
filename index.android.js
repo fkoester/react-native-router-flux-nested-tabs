@@ -1,5 +1,5 @@
 import { AppRegistry } from 'react-native';
 
-import Example from './Example';
+import NestedTabsDemo from './NestedTabsDemo';
 
-AppRegistry.registerComponent('Example', () => Example);
+AppRegistry.registerComponent('NestedTabsDemo', () => NestedTabsDemo);
