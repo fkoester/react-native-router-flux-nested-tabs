@@ -37,12 +37,8 @@ const TabView = (props, context) => {
         <Button onPress={Actions.tab2_2}>next screen for tab2_1</Button>
       }
       <Button onPress={Actions.pop}>Back</Button>
-      <Button onPress={() => { drawer.close(); Actions.tab1(); }}>Switch to tab1</Button>
-      <Button onPress={() => { drawer.close(); Actions.tab2(); }}>Switch to tab2</Button>
-      <Button onPress={() => { drawer.close(); Actions.tab3(); }}>Switch to tab3</Button>
-      <Button onPress={() => { drawer.close(); Actions.tab4(); }}>Switch to tab4</Button>
-      <Button onPress={() => { drawer.close(); Actions.tab5(); }}>Switch to tab5</Button>
       <Button onPress={() => { drawer.close(); Actions.echo(); }}>push new scene</Button>
+      <Button onPress={() => { drawer.close(); Actions.subtabs(); }}>push new tabs scene</Button>
     </View>
   );
 };

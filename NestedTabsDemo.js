@@ -107,60 +107,55 @@ class Example extends Component {
       <Router createReducer={reducerCreate} getSceneStyle={getSceneStyle}>
         <Scene key="modal" component={Modal} >
           <Scene key="root" hideNavBar hideTabBar>
-            <Scene key="echo" clone getTitle={(navState) => navState.key} tabs tabBarStyle={styles.tabBarStyle} tabBarSelectedItemStyle={styles.tabBarSelectedItemStyle}>
-              <Scene
-                key="groupDetailViewMemberListTab"
-                title="Members"
-                icon={TabIcon}
-                component={TabView}
-                clone
-              />
-            </Scene>
+            <Scene key="echo" clone component={EchoView} getTitle={(navState) => navState.key} />
             <Scene
-              key="switcher"
-              component={Switch}
-              selector={() => { return 'text1'; }}
+              key="subtabs"
+              clone
+              tabs
+              tabBarStyle={styles.tabBarStyle}
+              tabBarSelectedItemStyle={styles.tabBarSelectedItemStyle}
             >
               <Scene
-                key="text1"
-                text="text1"
-                component={(props) => <SwitcherPage
-                  {...props}
-                  text={currentSwitchPage}
-                />}
-              />
-              <Scene
-                key="text2"
-                text="text2"
-                component={(props) => <SwitcherPage
-                  {...props}
-                  text={currentSwitchPage}
-                />}
-              />
+                key="subtab1"
+                title="Subtab #1"
+                icon={TabIcon}
+                navigationBarStyle={{ backgroundColor: 'red' }}
+                titleStyle={{ color: 'white' }}
+              >
+                <Scene
+                  key="subtab1_1"
+                  component={TabView}
+                  title="Subtab #1_1"
+                  onRight={() => alert('Right button')}
+                  rightTitle="Right"
+                />
+                <Scene
+                  key="subtab1_2"
+                  component={TabView}
+                  title="Tab #1_2"
+                  titleStyle={{ color: 'black' }}
+                />
+              </Scene>
+              <Scene key="subtab2" title="Subtab #2" icon={TabIcon}>
+                <Scene
+                  key="subtab2_1"
+                  component={TabView}
+                  title="Subtab #2_1"
+                  renderRightButton={() => <Right />}
+                />
+                <Scene
+                  key="subtab2_2"
+                  component={TabView}
+                  title="Subtab #2_2"
+                  hideBackImage
+                  onBack={() => alert('Left button!')}
+                  backTitle="Left"
+                  duration={1}
+                  panHandlers={null}
+                />
+              </Scene>
             </Scene>
-            <Scene key="register" component={Register} title="Register" />
-            <Scene key="register2" component={Register} title="Register2" duration={1} />
-            <Scene key="home" component={Home} title="Replace" type={ActionConst.REPLACE} />
             <Scene key="launch" component={Launch} title="Launch" initial />
-            <Scene key="login" direction="vertical" >
-              <Scene key="loginModal" direction="vertical" component={Login} title="Login" />
-              <Scene
-                key="loginModal2"
-                hideNavBar
-                component={Login2}
-                title="Login2"
-                panHandlers={null}
-                duration={1}
-              />
-              <Scene
-                key="loginModal3"
-                hideNavBar
-                component={Login3}
-                title="Login3"
-                panHandlers={null}
-                duration={1}
-              />
-            </Scene>
             <Scene key="tabbar" component={NavigationDrawer}>
               <Scene
                 key="main"
@@ -189,7 +184,7 @@ class Example extends Component {
                     titleStyle={{ color: 'black' }}
                   />
                 </Scene>
-                <Scene key="tab2" initial title="Tab #2" icon={TabIcon}>
+                <Scene key="tab2" title="Tab #2" icon={TabIcon}>
                   <Scene
                     key="tab2_1"
                     component={TabView}
@@ -207,13 +202,9 @@ class Example extends Component {
                     panHandlers={null}
                   />
                 </Scene>
-                <Scene key="tab3" component={TabView} title="Tab #3" hideTabBar icon={TabIcon} />
-                <Scene key="tab4" component={TabView} title="Tab #4" hideNavBar icon={TabIcon} />
-                <Scene key="tab5" component={TabView} title="Tab #5" hideTabBar icon={TabIcon} />
               </Scene>
             </Scene>
           </Scene>
-          <Scene key="error" component={Error} />
         </Scene>
       </Router>
     );
