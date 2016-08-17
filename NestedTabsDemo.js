@@ -23,6 +23,10 @@ import {
 import Error from './components/Error';
 import Home from './components/Home';
 import TabView from './components/TabView';
+import GroupList from './components/GroupList';
+import GroupMemberList from './components/GroupMemberList';
+import GroupMemberDetail from './components/GroupMemberDetail';
+import GroupMap from './components/GroupMap';
 import TabIcon from './components/TabIcon';
 import EchoView from './components/EchoView';
 import NavigationDrawer from './components/NavigationDrawer';
@@ -53,11 +57,30 @@ const styles = StyleSheet.create({
   },
 });
 
+const logNode = function(node, level = 0) {
+  if(!node) {
+    return;
+  }
+
+  console.log(" ".repeat(level) + `${node.name} ${node.index}`);
+  if (Array.isArray(node.children)) {
+    node.children.forEach((child) => logNode(child, level + 2));
+  }
+}
+
 const reducerCreate = params => {
   const defaultReducer = new Reducer(params);
   return (state, action) => {
-    console.log('ACTION:', action);
-    return defaultReducer(state, action);
+    /*console.log('============================================================================================');
+    console.log('state before', state ? state : 'no state');*/
+    console.log('============================================================================================');
+    console.log('==> ACTION:', action.type, action.scene ? action.scene.name : '<no scene>');
+    //console.log('============================================================================================');
+    const newState = defaultReducer(state, action);
+    logNode(newState);
+    console.log('============================================================================================');
+
+    return newState;
   };
 };
 
@@ -108,53 +131,6 @@ class Example extends Component {
         <Scene key="modal" component={Modal} >
           <Scene key="root" hideNavBar hideTabBar>
             <Scene key="echo" clone component={EchoView} getTitle={(navState) => navState.key} />
-            <Scene
-              key="subtabs"
-              clone
-              tabs
-              tabBarStyle={styles.tabBarStyle}
-              tabBarSelectedItemStyle={styles.tabBarSelectedItemStyle}
-            >
-              <Scene
-                key="subtab1"
-                title="Subtab #1"
-                icon={TabIcon}
-                navigationBarStyle={{ backgroundColor: 'red' }}
-                titleStyle={{ color: 'white' }}
-              >
-                <Scene
-                  key="subtab1_1"
-                  component={TabView}
-                  title="Subtab #1_1"
-                  onRight={() => alert('Right button')}
-                  rightTitle="Right"
-                />
-                <Scene
-                  key="subtab1_2"
-                  component={TabView}
-                  title="Tab #1_2"
-                  titleStyle={{ color: 'black' }}
-                />
-              </Scene>
-              <Scene key="subtab2" title="Subtab #2" icon={TabIcon}>
-                <Scene
-                  key="subtab2_1"
-                  component={TabView}
-                  title="Subtab #2_1"
-                  renderRightButton={() => <Right />}
-                />
-                <Scene
-                  key="subtab2_2"
-                  component={TabView}
-                  title="Subtab #2_2"
-                  hideBackImage
-                  onBack={() => alert('Left button!')}
-                  backTitle="Left"
-                  duration={1}
-                  panHandlers={null}
-                />
-              </Scene>
-            </Scene>
             <Scene key="launch" component={Launch} title="Launch" initial />
             <Scene key="tabbar" component={NavigationDrawer}>
               <Scene
@@ -164,42 +140,55 @@ class Example extends Component {
                 tabBarSelectedItemStyle={styles.tabBarSelectedItemStyle}
               >
                 <Scene
-                  key="tab1"
-                  title="Tab #1"
+                  key="groupsTab"
+                  title="Groups"
                   icon={TabIcon}
-                  navigationBarStyle={{ backgroundColor: 'red' }}
-                  titleStyle={{ color: 'white' }}
                 >
                   <Scene
-                    key="tab1_1"
-                    component={TabView}
-                    title="Tab #1_1"
-                    onRight={() => alert('Right button')}
-                    rightTitle="Right"
+                    key="groupList"
+                    component={GroupList}
+                    title="Groups"
                   />
                   <Scene
-                    key="tab1_2"
-                    component={TabView}
-                    title="Tab #1_2"
-                    titleStyle={{ color: 'black' }}
-                  />
+                    key="groupDetail"
+                    tabs
+                    tabBarStyle={styles.tabBarStyle}
+                    tabBarSelectedItemStyle={styles.tabBarSelectedItemStyle}
+                  >
+                    <Scene
+                      key="groupMembersTab"
+                      title="Group Members"
+                      icon={TabIcon}
+                    >
+                      <Scene
+                        key="groupMemberList"
+                        component={GroupMemberList}
+                        title="Group Members"
+                      />
+                      <Scene
+                        key="groupMemberDetail"
+                        title="Group Member"
+                        component={GroupMemberDetail}
+                      />
+                    </Scene>
+                    <Scene
+                      key="groupMapTab"
+                      title="Group Map"
+                      icon={TabIcon}
+                    >
+                      <Scene
+                        key="groupMap"
+                        title="Group Map"
+                        component={GroupMap}
+                      />
+                    </Scene>
+                  </Scene>
                 </Scene>
-                <Scene key="tab2" title="Tab #2" icon={TabIcon}>
+                <Scene key="contactsTab" title="Contacts" icon={TabIcon}>
                   <Scene
-                    key="tab2_1"
+                    key="contactsList"
                     component={TabView}
-                    title="Tab #2_1"
-                    renderRightButton={() => <Right />}
-                  />
-                  <Scene
-                    key="tab2_2"
-                    component={TabView}
-                    title="Tab #2_2"
-                    hideBackImage
-                    onBack={() => alert('Left button!')}
-                    backTitle="Left"
-                    duration={1}
-                    panHandlers={null}
+                    title="Contacts"
                   />
                 </Scene>
               </Scene>
