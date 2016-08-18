@@ -62,7 +62,7 @@ const logNode = function(node, level = 0) {
     return;
   }
 
-  console.log(" ".repeat(level) + `${node.name} ${node.index}`);
+  console.log(" ".repeat(level) + `${node.name} ${node.key} ${node.index}`);
   if (Array.isArray(node.children)) {
     node.children.forEach((child) => logNode(child, level + 2));
   }
@@ -74,7 +74,13 @@ const reducerCreate = params => {
     /*console.log('============================================================================================');
     console.log('state before', state ? state : 'no state');*/
     console.log('============================================================================================');
-    console.log('==> ACTION:', action.type, action.scene ? action.scene.name : '<no scene>');
+    if(action.type === ActionConst.PUSH) {
+      console.log(`==> PUSH ${action.key}`);
+    } else if(action.type === ActionConst.FOCUS) {
+      console.log(`==> FOCUS ${action.scene.name}`);
+    } else {
+      console.log(`==> ACTION ${action.type}`);
+    }
     //console.log('============================================================================================');
     const newState = defaultReducer(state, action);
     logNode(newState);
