@@ -54,9 +54,6 @@ const styles = StyleSheet.create({
   tabBarStyle: {
     backgroundColor: '#eee',
   },
-  innerTabBarSceneStyle: {
-    paddingBottom: tabbarHeight,
-  },
   tabBarSelectedItemStyle: {
     backgroundColor: '#ddd',
   },
@@ -147,6 +144,7 @@ class Example extends Component {
               <Scene
                 key="main"
                 tabs
+                hideOnChildTabs
                 tabBarStyle={styles.tabBarStyle}
                 tabBarSelectedItemStyle={styles.tabBarSelectedItemStyle}
               >
@@ -165,7 +163,6 @@ class Example extends Component {
                     tabs
                     tabBarStyle={styles.tabBarStyle}
                     tabBarSelectedItemStyle={styles.tabBarSelectedItemStyle}
-                    sceneStyle={styles.innerTabBarSceneStyle}
                   >
                     <Scene
                       key="groupMembersTab"
