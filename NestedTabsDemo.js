@@ -45,12 +45,17 @@ const Right = () => (
   >Right</Text>
 );
 
+const tabbarHeight = 50;
+
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: 'transparent', justifyContent: 'center',
     alignItems: 'center',
   },
   tabBarStyle: {
     backgroundColor: '#eee',
+  },
+  innerTabBarSceneStyle: {
+    paddingBottom: tabbarHeight,
   },
   tabBarSelectedItemStyle: {
     backgroundColor: '#ddd',
@@ -160,6 +165,7 @@ class Example extends Component {
                     tabs
                     tabBarStyle={styles.tabBarStyle}
                     tabBarSelectedItemStyle={styles.tabBarSelectedItemStyle}
+                    sceneStyle={styles.innerTabBarSceneStyle}
                   >
                     <Scene
                       key="groupMembersTab"
